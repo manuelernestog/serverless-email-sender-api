@@ -1,8 +1,8 @@
 # Serverless Email API Powered by Sveltekit, Nodemailer and Gmail SMTP
 
-This repository contains a SvelteKit application deployed on Cloudflare Pages, providing an API endpoint to send emails using Nodemailer and Gmail's SMTP server.
+This repository contains a SvelteKit application deployed on Vercel, providing an API endpoint to send emails using Nodemailer and Gmail's SMTP server.
 
-> This repository does not work on Cloudflare due Cloudflare does not support Nodemailer, that's why we are using Vercel instead, but you can use Netlify or other hosting services compatible with Nodemailer. To use this repository in other hosting services, you need to change the `adapter` in `svelte.config.js` to the one that supports your hosting service.
+> This repository does not work on Cloudflare due does not support Nodemailer, that's why we are using Vercel instead, but you can use Netlify or other hosting services compatible with Nodemailer. To use this repository in other hosting services, you need to change the `adapter` in `svelte.config.js` to the one that supports your hosting service.
 
 ## Features
 
@@ -124,7 +124,7 @@ In the **"Environment Variables"** section, add the following variables:
 
 ### Endpoint
 
-- **URL**: `https://your-cloudflare-pages-domain/send`
+- **URL**: `https://your-pages-domain/send`
 - **Method**: `POST`
 - **Headers**:
   - `Authorization: Bearer your_authorization_token`
@@ -159,7 +159,7 @@ In the **"Environment Variables"** section, add the following variables:
 
 - **Authentication Issues**: Verify your SMTP credentials and ensure App Passwords are used if necessary.
 - **Email Delivery Problems**: Check your Gmail account for any security alerts or issues.
-- **Environment Variables**: Ensure environment variables are correctly set both locally and in Cloudflare Pages.
+- **Environment Variables**: Ensure environment variables are correctly set both locally and in Vercel.
 
 ## Extra
 
