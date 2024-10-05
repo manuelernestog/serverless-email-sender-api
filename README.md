@@ -2,6 +2,8 @@
 
 This repository contains a SvelteKit application deployed on Cloudflare Pages, providing an API endpoint to send emails using Nodemailer and Gmail's SMTP server.
 
+> This repository does not work on Cloudflare due Cloudflare does not support Nodemailer, that's why we are using Vercel instead, but you can use Netlify or other hosting services compatible with Nodemailer. To use this repository in other hosting services, you need to change the `adapter` in `svelte.config.js` to the one that supports your hosting service.
+
 ## Features
 
 - **Send Emails**: Send emails by making a `POST` request to the `/send` endpoint.
@@ -11,8 +13,8 @@ This repository contains a SvelteKit application deployed on Cloudflare Pages, p
 ## Prerequisites
 
 - **Node.js and npm**: [Install Node.js](https://nodejs.org/)
-- **Cloudflare Account**: [Sign up for Cloudflare](https://dash.cloudflare.com/sign-up)
 - **Gmail Account**: A Gmail account with App Passwords enabled (if using two-factor authentication)
+- **Vercel Account**: [Sign up for Vercel](https://vercel.com/signup)
 
 ## Setup
 
@@ -87,29 +89,36 @@ curl -X POST http://localhost:5173/send \
   }'
 ```
 
-### 7. Deploy to Cloudflare Pages
 
-1. **Push Your Code to a Git Repository**:
-   - Commit your changes and push to a Git hosting service like GitHub.
 
-2. **Create a New Project on Cloudflare Pages**:
-   - Log in to the Cloudflare dashboard.
-   - Navigate to **Pages** and click **Create a project**.
-   - Connect your Git repository.
+### 6 Deploy to Vercel
 
-3. **Set Build Configuration**:
-   - **Build command**: `npm run build`
-   - **Build output directory**: `build`
+#### Import Project into Vercel
 
-4. **Configure Environment Variables**:
-   - In your Cloudflare Pages project settings, navigate to **Environment Variables**.
-   - Add the following variables:
-     - `AUTH_TOKEN`
-     - `SMTP_USERNAME`
-     - `SMTP_PASSWORD`
+1. **Log In to Vercel**: Go to [Vercel Dashboard](https://vercel.com/dashboard) and log in.
 
-5. **Deploy the Project**:
-   - Trigger a deployment from the Cloudflare dashboard or by pushing changes to your repository.
+2. **Import Project**:
+   - Click on **"New Project"**.
+   - Select the Git repository containing your SvelteKit application.
+
+3. **Configure Project Settings**:
+   - **Framework Preset**: Vercel should auto-detect SvelteKit.
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `build`
+
+#### Set Environment Variables
+
+In the **"Environment Variables"** section, add the following variables:
+
+- `AUTH_TOKEN`
+- `SMTP_USERNAME`
+- `SMTP_PASSWORD`
+
+**Note**: Vercel supports different environment variable configurations for development, preview, and production environments.
+
+#### Deploy the Project
+
+- Click **"Deploy"** to start the deployment process.
 
 ## Usage
 
