@@ -1,38 +1,208 @@
-# create-svelte
+# Serverless Email API Powered by Sveltekit, Nodemailer and Gmail SMTP
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This repository contains a SvelteKit application deployed on Cloudflare Pages, providing an API endpoint to send emails using Nodemailer and Gmail's SMTP server.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Send Emails**: Send emails by making a `POST` request to the `/send` endpoint.
+- **Authorization**: Secures the endpoint with a Bearer token.
+- **JSON Payload**: Accepts email details (`from`, `to`, `subject`, `html`) in JSON format.
+
+## Prerequisites
+
+- **Node.js and npm**: [Install Node.js](https://nodejs.org/)
+- **Cloudflare Account**: [Sign up for Cloudflare](https://dash.cloudflare.com/sign-up)
+- **Gmail Account**: A Gmail account with App Passwords enabled (if using two-factor authentication)
+
+## Setup
+
+### 1. Clone the Repository
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
 ```
 
-## Developing
+### 2. Install Dependencies
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```bash
+npm install
+```
+
+### 3. Configure Environment Variables
+
+Create a `.env` file in the root directory:
+
+```ini
+AUTH_TOKEN=your_authorization_token
+SMTP_USERNAME=your_gmail_address@gmail.com
+SMTP_PASSWORD=your_gmail_app_password
+```
+
+**Note**: Do not commit the `.env` file to version control to keep your credentials secure.
+
+### 4. Set Up Gmail App Password
+
+If you have two-factor authentication enabled on your Gmail account, you'll need to generate an App Password.
+
+#### How to Configure an App Password for Your Gmail Account
+
+1. **Enable Two-Factor Authentication (if not already enabled)**:
+   - Go to your Google Account security settings: [Google Account Security](https://myaccount.google.com/security)
+   - Under "Signing in to Google," select **2-Step Verification** and follow the prompts to enable it.
+
+2. **Generate an App Password**:
+   - Return to the [Google Account Security](https://myaccount.google.com/security) page.
+   - Under "Signing in to Google," select **App Passwords**. (You may need to re-enter your password.)
+   - In the **Select app** dropdown, choose **Mail**.
+   - In the **Select device** dropdown, choose **Other (Custom name)**.
+   - Enter a custom name (e.g., "SvelteKit Email API") and click **Generate**.
+   - Google will generate a 16-character app password. Copy this password; you'll need it for the `SMTP_PASSWORD` environment variable.
+
+**Important**: Keep this app password secure and do not share it.
+
+### 5. Run Locally
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+The application will be available at `http://localhost:5173`.
 
-To create a production version of your app:
+### 6. Test the API
+
+Make a `POST` request to `http://localhost:5173/send` with the appropriate headers and body.
+
+#### Example Request
 
 ```bash
-npm run build
+curl -X POST http://localhost:5173/send \
+  -H "Authorization: Bearer your_authorization_token" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from": "your_gmail_address@gmail.com",
+    "to": "recipient@example.com",
+    "subject": "Hello World",
+    "html": "<h1>It works!</h1>"
+  }'
 ```
 
-You can preview the production build with `npm run preview`.
+### 7. Deploy to Cloudflare Pages
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+1. **Push Your Code to a Git Repository**:
+   - Commit your changes and push to a Git hosting service like GitHub.
+
+2. **Create a New Project on Cloudflare Pages**:
+   - Log in to the Cloudflare dashboard.
+   - Navigate to **Pages** and click **Create a project**.
+   - Connect your Git repository.
+
+3. **Set Build Configuration**:
+   - **Build command**: `npm run build`
+   - **Build output directory**: `build`
+
+4. **Configure Environment Variables**:
+   - In your Cloudflare Pages project settings, navigate to **Environment Variables**.
+   - Add the following variables:
+     - `AUTH_TOKEN`
+     - `SMTP_USERNAME`
+     - `SMTP_PASSWORD`
+
+5. **Deploy the Project**:
+   - Trigger a deployment from the Cloudflare dashboard or by pushing changes to your repository.
+
+## Usage
+
+### Endpoint
+
+- **URL**: `https://your-cloudflare-pages-domain/send`
+- **Method**: `POST`
+- **Headers**:
+  - `Authorization: Bearer your_authorization_token`
+  - `Content-Type: application/json`
+- **Body**:
+
+  ```json
+  {
+    "from": "your_gmail_address@gmail.com",
+    "to": "recipient@example.com",
+    "subject": "Hello World",
+    "html": "<h1>It works!</h1>"
+  }
+  ```
+
+### Responses
+
+- **200 OK**: Email sent successfully.
+- **400 Bad Request**: Missing required fields or invalid JSON.
+- **401 Unauthorized**: Missing or malformed `Authorization` header.
+- **403 Forbidden**: Invalid authorization token.
+- **500 Internal Server Error**: An error occurred on the server.
+
+## Notes
+
+- **Gmail SMTP**: Ensure that you have enabled [App Passwords](https://support.google.com/accounts/answer/185833) if you have two-factor authentication enabled.
+- **Security**: Never expose your SMTP credentials in the code or commit them to version control.
+- **Multiple Recipients**: The `to` field can be a single email address or an array of email addresses.
+- **Email Limits**: Gmail has sending limits; for higher volumes, consider using a professional email service.
+
+## Troubleshooting
+
+- **Authentication Issues**: Verify your SMTP credentials and ensure App Passwords are used if necessary.
+- **Email Delivery Problems**: Check your Gmail account for any security alerts or issues.
+- **Environment Variables**: Ensure environment variables are correctly set both locally and in Cloudflare Pages.
+
+## Extra
+
+### **Configure Custom Domain Alias in Gmail**
+
+#### **1. Access Gmail Settings**
+
+- Log in to your Gmail account.
+- Click on the **gear icon** ⚙️ in the top-right corner.
+- Select **"See all settings"** from the dropdown menu.
+
+#### **2. Navigate to the "Accounts and Import" Tab**
+
+- Click on the **"Accounts and Import"** tab at the top.
+
+#### **3. Add Your Custom Email Address**
+
+- In the **"Send mail as"** section, click on **"Add another email address"**.
+
+#### **4. Enter Your Custom Email Details**
+
+- **Name**: Enter the name you want recipients to see.
+- **Email address**: Enter your custom domain email (e.g., `you@yourdomain.com`).
+- **Treat as an alias**: Keep this checked if you want to receive replies in Gmail.
+- Click **"Next Step"**.
+
+#### **5. Choose the SMTP Server Option**
+
+##### **Option A: Use Gmail's SMTP Servers**
+
+- **SMTP Server**: `smtp.gmail.com`
+- **Username**: Your full Gmail address (e.g., `yourgmail@gmail.com`).
+- **Password**: Your Gmail password or [App Password](https://support.google.com/accounts/answer/185833) if 2FA is enabled.
+- **Port**: `587` (TLS) or `465` (SSL)
+- **Secure Connection**: Select **"Secured connection using TLS"**.
+- Click **"Add Account"**.
+
+#### **6. Verify Your Email Address**
+
+- Gmail will send a verification email to your custom email address.
+- Access your custom email inbox (via webmail or email client).
+- Open the email from Gmail and click the verification link or enter the provided code in Gmail's settings.
+
+#### **7. Set Your Custom Email as Default (Optional)**
+
+- In Gmail settings under **"Send mail as"**, you can make your custom email the default address by clicking **"make default"** next to it.
+
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.

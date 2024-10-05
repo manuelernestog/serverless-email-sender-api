@@ -1,2 +1,2 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>Serverless Email Sender API</h1>
+<p>Visit <a href="https://github.com/manuelernestog/serverless-email-sender-api">github repo</a> to read the documentation</p>
