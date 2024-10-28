@@ -18,11 +18,19 @@ This repository contains a SvelteKit application deployed on Vercel, providing a
 
 ## Quick Setup
 
-### 1. Deploy to Vercel
+### 1. [Set Up Gmail App Password](#4-set-up-gmail-app-password)
+
+### 2. Deploy to Vercel
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmanuelernestog%2Fserverless-email-sender-api&env=AUTH_TOKEN,SMTP_USERNAME,SMTP_PASSWORD&project-name=serverless-email-sender-api&repository-name=serverless-email-sender-api)
 
-### 2. [Set Up Gmail App Password](#4-set-up-gmail-app-password)
+#### Configure your env vars:
+
+```ini
+AUTH_TOKEN=your_authorization_token // Set a random auth token for use it later on your requests
+SMTP_USERNAME=your_gmail_address@gmail.com
+SMTP_PASSWORD=your_gmail_app_password
+```
 
 ### 3. [Send your first email!](#usage)
 
@@ -67,10 +75,8 @@ If you have two-factor authentication enabled on your Gmail account, you'll need
 
 2. **Generate an App Password**:
    - Return to the [Google Account Security](https://myaccount.google.com/security) page.
-   - Under "Signing in to Google," select **App Passwords**. (You may need to re-enter your password.)
-   - In the **Select app** dropdown, choose **Mail**.
-   - In the **Select device** dropdown, choose **Other (Custom name)**.
-   - Enter a custom name (e.g., "SvelteKit Email API") and click **Generate**.
+   - Under "Signing in to Google," select **App Passwords** or type in the search bar **App Passwords**
+   - Follow the prompts to enable it
    - Google will generate a 16-character app password. Copy this password; you'll need it for the `SMTP_PASSWORD` environment variable.
 
 **Important**: Keep this app password secure and do not share it.
