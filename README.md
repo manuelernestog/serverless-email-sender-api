@@ -16,7 +16,19 @@ This repository contains a SvelteKit application deployed on Vercel, providing a
 - **Gmail Account**: A Gmail account with App Passwords enabled (if using two-factor authentication)
 - **Vercel Account**: [Sign up for Vercel](https://vercel.com/signup)
 
-## Setup
+## Quick Setup
+
+### 1. Deploy to Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmanuelernestog%2Fserverless-email-sender-api&env=AUTH_TOKEN,SMTP_USERNAME,SMTP_PASSWORD&project-name=serverless-email-sender-api&repository-name=serverless-email-sender-api)
+
+### 2. [Set Up Gmail App Password](#4-set-up-gmail-app-password)
+
+### 3. [Send your first email!](#usage)
+
+
+
+## Local Setup
 
 ### 1. Clone the Repository
 
@@ -88,7 +100,6 @@ curl -X POST http://localhost:5173/send \
     "html": "<h1>It works!</h1>"
   }'
 ```
-
 
 
 ### 6 Deploy to Vercel
